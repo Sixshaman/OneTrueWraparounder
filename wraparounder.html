@@ -8,11 +8,14 @@
         <meta http-equiv="Expires"       content="0"/>
 
         <title>Wraparounder</title>
-        <script src="js/Wraparounder.js?ver=1.2.3"></script>
-        <link rel="stylesheet" type="text/css" href="css/Wraparounder.css?ver=1.1.2"> 
+        <script src="js/Wraparounder.js?ver=1.2.9"></script>
+        <link rel="stylesheet" type="text/css" href="css/Wraparounder.css?ver=1.2.3"> 
     </head>
     <body>
         <canvas id="CanvasWraparounder">Wraparounder</canvas>
+
+        <label for="ColorSelect">Select color:</label>
+        <input type="color" id="ColorSelect" name="ColorSelect" value="#ff0000"> 
 
         <div class="loadsavecontainer">
             <label for="UploadImage">Upload an image:</label>
@@ -21,6 +24,6 @@
             <button type="button" id="ButtonSave" hidden="true">Save</button>
         </div>
 
-        <script>Init();</script>
+        <script>main();</script>
     </body>
 </html>
