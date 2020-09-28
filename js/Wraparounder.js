@@ -115,10 +115,10 @@ function main()
 
     let colorPicker = document.getElementById("ColorSelect");
 
+    let wrapCheckbox = document.getElementById("WrapCheckbox");
+
     let imageWidth  = 0;
     let imageHeight = 0;
-
-    let useWraparound = true;
 
     //Temporary workaround, will be fixed
     canvas.width  = window.innerWidth;
@@ -131,6 +131,8 @@ function main()
         let y = e.pageY - canvas.offsetTop;
 
         let contents = canvasContext.getImageData(0, 0, imageWidth, imageHeight);
+
+        let useWraparound = wrapCheckbox.checked;
 
         let fillColor = hexToRGBA(colorPicker.value); 
         fill(x, y, fillColor, contents.width, contents.height, useWraparound, contents.data);
