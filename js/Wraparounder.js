@@ -120,15 +120,12 @@ function main()
     let imageWidth  = 0;
     let imageHeight = 0;
 
-    //Temporary workaround, will be fixed
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.hidden = true; 
+     canvas.hidden = true;
 
     canvas.onclick = function(e)
     {
-        let x = e.pageX - canvas.offsetLeft;
-        let y = e.pageY - canvas.offsetTop;
+        let x = e.offsetX;
+        let y = e.offsetY;
 
         let contents = canvasContext.getImageData(0, 0, imageWidth, imageHeight);
 
@@ -154,12 +151,18 @@ function main()
             {
                 buttonSave.hidden = false;
 
+                canvas.width  = image.width;
+                canvas.height = image.height;
+
                 canvas.clientWidth  = image.width;
                 canvas.clientHeight = image.height;
 
+                canvas.style.width  = image.width  + "px";
+                canvas.style.height = image.height + "px";
+
                 imageWidth  = image.width;
                 imageHeight = image.height;
-                
+
                 canvasContext.drawImage(image, 0, 0);
             }
             image.src = fileReader.result;
