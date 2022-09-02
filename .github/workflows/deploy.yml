@@ -1,0 +1,52 @@
+name: Publish release
+
+on:
+  push:
+    branches: [ "master" ]
+    
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create deploy folder
+      run: mkdir -p ${GITHUB_WORKSPACE}/wraparounder
+    - name: Copy HTML
+      uses: canastro/copy-file-action@master
+      with:
+        source: "wraparounder.html"
+        target: "wraparounder/wraparounder.html"
+    - name: Copy CSS
+      uses: canastro/copy-file-action@master
+      with:
+        source: "css"
+        target: "wraparounder/css"
+        flags: "-r"
+    - name: Copy JS
+      uses: canastro/copy-file-action@master
+      with:
+        source: "js"
+        target: "wraparounder/js"
+        flags: "-r"
+    - name: Zip release
+      uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r wraparounder.zip wraparounder
+    - name: Get release name
+      id: release_name
+      run: echo "::set-output name=relname::$(date +'Build %Y-%m-%d %H:%M:%S')"
+    - name: Get tag name
+      id: tag_name
+      run: echo "::set-output name=tagname::$(date +'%Y-%m-%d-%H-%M-%S')"
+    - name: Create release
+      id: create_release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "wraparounder.zip"
+        token: ${{secrets.GITHUB_TOKEN}}
+        name: ${{steps.release_name.outputs.relname}}
+        tag: ${{steps.tag_name.outputs.tagname}}
+        commit: ${{github.sha}}
